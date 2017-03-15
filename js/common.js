@@ -103,7 +103,7 @@ function MxOnloadPage( newUrl ){
 	// Controller
     function YinAndYangDrop(){
 
-    	getPositionPoint( '.mx-yay_point' );
+    	getInfoPoint( '.mx-yay_point' );
 
     	setPopupWindow(
 			'Вы сделали выбор',
@@ -116,17 +116,31 @@ function MxOnloadPage( newUrl ){
 		$( '<div class="pluso" style="display:none;" data-background="transparent" data-options="big,square,line,horizontal,counter,theme=04" data-services="vkontakte,odnoklassniki,facebook,twitter,google" data-url="http://yin-and-yang/" data-title="Синие против красного" data-description="Текст описаие"></div>' ).appendTo( '.mx-org_info_wrap' );
 		$( '.pluso' ).css( { 'display': 'block', 'margin-top': '10px' } );
 
-    	console.log( parseInt( pointLeft ) + ' ' + parseInt( pointTop ) );
+    	// Insert data
+    	insertData( pointLeft, pointTop, pointID );
+
+    	// Load points
+    	setTimeout( function(){
+			MxOnloadPage( '../inc/select.php' );
+    	},1000 );
+		
     }
 
     // get Position Point
-    function getPositionPoint( mxPoint ){
+    function getInfoPoint( mxPoint ){
 
     	blockField = $( '.mx-yay_yin_field' ).offset();
 		pointOffset = $( '.activePoint' ).offset();
 
 		pointLeft = pointOffset.left - blockField.left;
-		pointTop = pointOffset.top - blockField.top;	    		
+		pointLeft = parseInt( pointLeft );
+
+		pointTop = pointOffset.top - blockField.top;
+		pointTop = parseInt( pointTop );
+
+		pointID = $( '.activePoint' ).attr( 'id' );
+
+		//console.log( pointLeft + ' ' + pointTop + ' ' + pointID );
     	
     }
 
@@ -165,6 +179,22 @@ function MxOnloadPage( newUrl ){
 
 		$( '.mx-yay_count_yin .mx-yay_count_block span' ).html( '<span> - </span>' + countPoint_Yin );
 		$( '.mx-yay_count_yang .mx-yay_count_block span' ).html( '<span> - </span>' + countPoint_Yang );
+	}
+
+	// Insert data
+	function insertData( pointLeft, pointTop, pointID ){		
+
+		pointInsertData = 	'id_point=' + pointID +
+							'&coord_x=' + pointLeft +
+							'&coord_y=' + pointTop;
+		$.ajax({
+			type: 'POST',
+			url: '../inc/insert.php',
+			data: pointInsertData,	
+			success: function(data) {
+				console.log( 'success!)' );                    
+			}			
+		});	
 	}
 		
 

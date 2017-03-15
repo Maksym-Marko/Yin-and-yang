@@ -54,9 +54,7 @@
 							echo gmdate( "H:i:s", $timeDifference );
 						} else{
 							echo gmdate( "d H:i:s", $timeDifference );
-						}
-
-						echo $_SERVER["REMOTE_ADDR"];		
+						}								
 					?>
 				</span>
 			</div>
@@ -79,8 +77,6 @@
 	<script type="text/javascript" src="js/jquery-ui.js"></script>
 	<script type="text/javascript" src="js/jquery.cookie.js"></script>
 	<script type="text/javascript" src="js/common.js"></script>
-
-
 
 </body>
 </html>
