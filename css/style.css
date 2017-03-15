@@ -63,7 +63,7 @@ body{
 	-moz-box-sizing: border-box;
     box-sizing: border-box;
 }
-#mxYayPoint_Yin, #mxYayPoint_Yang{
+.mx-yay_point{
 	width: 20px;
 	height: 20px;
 	display: table;
@@ -73,6 +73,15 @@ body{
 	-webkit-border-radius: 50%;
 	cursor: pointer;
 }
+		/**/
+		.mxYayPoint_Yin{
+			background-color: #3724E2;
+		}
+		.mxYayPoint_Yang{
+			background-color: #E22424;
+		}
+		/**/
+
 #mxYayPoint_Yin{
 	float: left;
 	background-color: #3724E2;	
@@ -83,12 +92,14 @@ body{
 }
 
 /* Field */
-.mx-yay_yin_field{	
+.mx-yay_yin_field{
+	position: relative;
 	width: 100%;
 	height: 550px;
 	background-color: #f5f2f2;
 	/*background-color: #53F55E;
 	opacity: 0.2;*/
+	z-index: -1;
 }
 
 /* System */
