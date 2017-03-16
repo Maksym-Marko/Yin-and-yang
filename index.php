@@ -15,10 +15,10 @@
 	<div class="mx-yay_wrap">
 		<div class="mx-yay_yin_header">
 			<div class="mx-yay_yin_block">
-				<div id="mxYayPoint_Yin" class="mx-yay_point"></div>
+				<div id="mxYayPoint_Yin" class="mx-yay_point mx-yay_point_main"></div>
 			</div>
 			<div class="mx-yay_yang_block">
-				<div id="mxYayPoint_Yang" class="mx-yay_point"></div>
+				<div id="mxYayPoint_Yang" class="mx-yay_point mx-yay_point_main"></div>
 			</div>
 			<div class="mx-yay_info">
 				1
@@ -68,15 +68,35 @@
         <h2></h2>
         <h3></h3>
         <p></p>
+
+        <div class="pluso" style="display:none;" data-background="transparent" data-options="big,square,line,horizontal,counter,theme=04" data-services="vkontakte,odnoklassniki,facebook,twitter,google" data-url="http://yin-and-yang/" data-title="Синие против красного" data-description="Текст описаие"></div>
 		
       </div>
     </div>
     <!-- popup-->
 
+    <!-- Get ip -->
+    <?php
+		if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+		    $ip = $_SERVER['HTTP_CLIENT_IP'];
+		} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+		    $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+		} else {
+		    $ip = $_SERVER['REMOTE_ADDR'];
+		}		
+	?>
+
+	<script>
+		var ipUser = '<?php echo $ip;?>';		
+	</script>
+	<!-- Get ip -->
+
 	<script type="text/javascript" src="js/jquery-1.11.3.js"></script>
 	<script type="text/javascript" src="js/jquery-ui.js"></script>
 	<script type="text/javascript" src="js/jquery.cookie.js"></script>
-	<script type="text/javascript" src="js/common.js"></script>
+	<script type="text/javascript" src="js/common.js?v=<?php echo time();?>"></script>
+
+	<script type="text/javascript" src="js/pluso.js"></script>
 
 </body>
 </html>

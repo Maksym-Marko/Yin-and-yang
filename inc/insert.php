@@ -20,7 +20,7 @@ class InsertData extends DBconect{
 } 
 
 if( isset( $_POST['id_point'] ) ){
-	$ip_user = "'" . $_SERVER['REMOTE_ADDR'] . "'";
+	$ip_user = "'" . $_POST['ip_user'] . "'";
 	$time = "'" . date( 'H:m:s' ) . "'";
 	$id_point = "'" . $_POST['id_point'] . "'";
 	$coord_x = "'" . $_POST['coord_x'] . "'";

@@ -31,7 +31,7 @@ class SelectedData extends DBconect{
 		foreach ( $std as $row ) {
 			?>
 
-				<div style="left: <?php echo $row['coord_x']; ?>px; top: <?php echo $row['coord_y']; ?>px;" id="<?php echo $row['id_point'] . '_' . $row['id']; ?>" class="mx-yay_point_load mx-yay_point <?php echo $row['id_point']; ?>"></div>
+				<div style="left: <?php echo $row['coord_x']; ?>px; top: <?php echo $row['coord_y']; ?>px;" id="<?php echo $row['id_point'] . '_' . $row['id']; ?>" class="mx-yay_point_load mx-yay_point <?php echo $row['id_point']; ?>" data-ip-user="<?php echo $row['ip_user']; ?>"></div>
 
 
 			<?

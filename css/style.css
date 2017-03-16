@@ -32,6 +32,7 @@ body{
 	margin: 0px auto;
 	border-left: 1px solid #a09c9c;
 	border-right: 1px solid #a09c9c;
+	z-index: 1;
 }
 .mx-yay_yin_header{
 	height: 60px;
@@ -99,7 +100,7 @@ body{
 	background-color: #f5f2f2;
 	/*background-color: #53F55E;
 	opacity: 0.2;*/
-	z-index: -1;
+	z-index: 2;
 }
 
 /* System */
@@ -188,6 +189,7 @@ body{
   width: 100%;
   height: 100%;
   background-color: rgba(0,0,0,0.4);
+  z-index: 889;
 }
 .mx-popup_wrap > div{
   position: absolute;
@@ -252,4 +254,27 @@ body{
 }
 .mx-popup_wrap a:hover{
   text-decoration: none;
+}
+
+/**/
+.mx-yay_point_main_transition{
+	-webkit-transition: .4s ease-out;
+     -webkit-transition-delay: 0.5s;
+     -o-transition: .4s ease-out;
+     -o-transition-delay: 0.5s;
+     -moz-transition: .4s ease-out;
+     -moz-transition-delay: 0.5s;
+     transition: .4s ease-out;
+     transition-delay: 0.5s;
+}
+
+.mx-point_this_user{
+	width: 30px	!important;
+	height: 30px !important;
+	border: 2px solid #ddd;
+	z-index: 888;
+}
+
+.mx-yay_point_load{
+	cursor: default !important;
 }

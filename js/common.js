@@ -1,14 +1,18 @@
 $( document ).ready( function(){
 
+	//$.cookie( 'cookie_ip', '' ); //120.00.92
+
 	var disabledDraggable = false;
 
 	init();
 
 	$( '#mxYayPoint_Yin, #mxYayPoint_Yang' ).draggable( {
 		disabled: disabledDraggable,
-		//zIndex: 100,
+		start: function( event, ui ) {
+			$( '.mx-yay_point_main' ).removeClass( 'mx-yay_point_main_transition' );
+		},
 		drag: function(){
-			$( this ).addClass( 'activePoint' );
+			$( this ).addClass( 'activePoint' );			
 		},
 		containment: '.mx-yay_yin_field'
 	} );
@@ -55,13 +59,6 @@ function MxOnloadPage( newUrl ){
 
 
 
-
-
-
-
-
-
-
 /*--------------------------------------------------------* 
 *----------------------- FUNCTIONS -----------------------*
 * --------------------------------------------------------*/
@@ -72,6 +69,14 @@ function MxOnloadPage( newUrl ){
 
 		if( cookiOpen ){
 
+			// Inactive points
+			inactiveMainPoints();
+
+			// Get point user
+			setTimeout( function(){
+				getPointThisUser();
+			},400 );			
+
 			console.log( cookiOpen );
 			setPopupWindow(
 				'Вы уже зделали свой выбор',
@@ -81,8 +86,17 @@ function MxOnloadPage( newUrl ){
 
 			disabledDraggable = true;
 
+			// Shine points
+			actionKey = false;
+
 		} else{
 			console.log( 'Open' );
+
+			// Shine points
+			actionKey = true;
+
+			$( '.mx-yay_point_main' ).addClass( 'mx-yay_point_main_transition' );
+
 			// setPopupWindow(
 			// 	'Голосование открыто',
 			// 	'Вы можете выбрать один из двух вариантов',
@@ -100,29 +114,40 @@ function MxOnloadPage( newUrl ){
 		
 	}
 
-	// Controller
+	// Drop Down
     function YinAndYangDrop(){
 
-    	getInfoPoint( '.mx-yay_point' );
+    	if( disabledDraggable == false ){
 
-    	setPopupWindow(
-			'Вы сделали выбор',
-			'Спасибо!',
-			'Передайте, пожалуйста, эту ссылку своему другу <span style="color: #3f21da;float: none;padding: 10px 0px;font-weight: bold;">http://example.com</span> Пусть и он проголосует :) <br><br> Также Вы можете поделиться страницой в социальной сете.'
-		);
+    		getInfoPoint( '.mx-yay_point' );
 
-    	// append pluso		    	
-    	$( '<script type="text/javascript" src="js\/pluso.js"><\/script>' ).appendTo( '.mx-org_info_wrap' );
-		$( '<div class="pluso" style="display:none;" data-background="transparent" data-options="big,square,line,horizontal,counter,theme=04" data-services="vkontakte,odnoklassniki,facebook,twitter,google" data-url="http://yin-and-yang/" data-title="Синие против красного" data-description="Текст описаие"></div>' ).appendTo( '.mx-org_info_wrap' );
-		$( '.pluso' ).css( { 'display': 'block', 'margin-top': '10px' } );
+	    	setPopupWindow(
+				'Вы сделали выбор',
+				'Спасибо!',
+				'Передайте, пожалуйста, эту ссылку своему другу <span style="color: #3f21da;float: none;padding: 10px 0px;font-weight: bold;">http://example.com</span> Пусть и он проголосует :) <br><br> Также Вы можете поделиться страницой в социальной сете.'
+			);
 
-    	// Insert data
-    	insertData( pointLeft, pointTop, pointID );
+	    	// append pluso		
+			$( '.pluso' ).css( { 'display': 'block', 'margin-top': '10px' } );
 
-    	// Load points
-    	setTimeout( function(){
-			MxOnloadPage( '../inc/select.php' );
-    	},1000 );
+	    	// Insert data
+	    	insertData( pointLeft, pointTop, pointID );
+
+	    	// Load points
+	    	setTimeout( function(){
+				MxOnloadPage( '../inc/select.php' );
+	    	},1000 );
+
+			// Inactive points
+			inactiveMainPoints();
+
+			// Shine points
+			actionKey = false;
+
+			// Disabled
+			disabledDraggable = true;
+
+    	}    	
 		
     }
 
@@ -146,7 +171,7 @@ function MxOnloadPage( newUrl ){
 
     // set cookie
     function setCookie(){
-
+    	$.cookie( 'cookie_ip', ipUser );
     }
 
     // Popup window
@@ -166,9 +191,6 @@ function MxOnloadPage( newUrl ){
 		$( '#MxClose' ).on( 'click', function(){
 			$( '.mx-popup_wrap' ).css( 'display', 'none' );
 			$( 'body' ).css( 'overflow', 'auto' );
-
-			$( '.mx-org_info_wrap .pluso' ).remove();
-			$( '.mx-org_info_wrap script' ).remove();
 		});
     }
 
@@ -184,7 +206,8 @@ function MxOnloadPage( newUrl ){
 	// Insert data
 	function insertData( pointLeft, pointTop, pointID ){		
 
-		pointInsertData = 	'id_point=' + pointID +
+		pointInsertData = 	'ip_user='+ ipUser +
+							'&id_point=' + pointID +
 							'&coord_x=' + pointLeft +
 							'&coord_y=' + pointTop;
 		$.ajax({
@@ -194,28 +217,52 @@ function MxOnloadPage( newUrl ){
 			success: function(data) {
 				console.log( 'success!)' );                    
 			}			
-		});	
+		});
+
+		// Set coocie
+		setCookie();
 	}
+
+	// Inactive points
+	function inactiveMainPoints(){
+		$( '.mx-yay_point_main' ).attr( 'style', '' );
+		$( '.mx-yay_point_main' ).css( { 'opacity': '0.5', 'cursor': 'default' } );
+	}
+    
+    function getPointThisUser(){
+    	var getCookieIp = $.cookie( 'cookie_ip' );
+    	$( '.mx-yay_point_load' ).each( function(){
+    		var dataIpUser = $( this ).attr( 'data-ip-user' );
+    		if( dataIpUser == getCookieIp ){
+    			$( this ).addClass( 'mx-point_this_user' );
+    			$( this ).attr( 'title', 'Твой выбор' );
+    		}
+    		//console.log(dataIpUser);
+    	} );
+
+    }
+
+	// Shine points
+	keyShine = 'bright';
+	brightInterval = setInterval( function(){
+
+		if( actionKey == false ){
+			clearInterval( brightInterval );				
+		} else{				
+			if( keyShine == 'bright'  ){
+				$( '.mx-yay_point_main' ).css( {'opacity': 0.5, 'width': '22px', 'height': '22px' } );
+				keyShine = 'lost';				
+			} else{
+				$( '.mx-yay_point_main' ).css( {'opacity': 1, 'width': '20px', 'height': '20px' } );
+				keyShine = 'bright';
+			}
+		}
+
+	},800 );
+
+		
 		
 
-    			
 		
-	// if( cookName ){
-	
-	// 	$( '.cook' ).css( 'background', cookName );
-	
-	// } 				
-	
-	// set cookie
-	
-	//$( '.cook' ).click( function(){
-	
-		//$( this ).css( 'background', 'gray' );	
-		
-		$.cookie( 'cook_background', 'gray' );
-	
-	//} );
-
-	//alert( cookName );
 
 } );
