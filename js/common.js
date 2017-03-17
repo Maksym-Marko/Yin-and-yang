@@ -1,6 +1,6 @@
 $( document ).ready( function(){
 
-	//$.cookie( 'cookie_ip', '' ); //120.00.92
+	//$.cookie( 'cookie_ip', '' );
 
 	var disabledDraggable = false;
 
@@ -31,10 +31,10 @@ setInterval( function(){
 	// AJAX functions
 		// code ...
 
-	// Count points functions
-	setCountPoints();
+	// Scan DB
+	MxScanDB( '../inc/scan_db.php' )	
 		
-},2000 );
+},4000 );
 
 
 /*--------------------------------------------------------* 
@@ -43,15 +43,86 @@ setInterval( function(){
 
 
 
-// ajax load page
-function MxOnloadPage( newUrl ){
+// ajax load Points
+function MxOnloadAllPoints( newUrl, limitSelect ){
+
+	var getSend = 'limit=' + limitSelect;
+
 	$.ajax( {
-		url: newUrl,
+		url: newUrl,		
+		data: getSend,
 		type: 'GET',
 		beforeSend: function(){},
 		complete: function(){},
 		success: function( data ){
 			$( '.mx-yay_yin_field' ).append( data );
+		}
+	} );
+}
+
+// Insert data
+function insertData( pointLeft, pointTop, pointID ){		
+
+	pointInsertData = 	'ip_user='+ ipUser +
+						'&id_point=' + pointID +
+						'&coord_x=' + pointLeft +
+						'&coord_y=' + pointTop;
+	$.ajax({
+		type: 'POST',
+		url: '../inc/insert.php',
+		data: pointInsertData,	
+		success: function(data) {
+			console.log( 'success!)' );                    
+		}			
+	});
+
+	// Set coocie
+	setCookie();
+}
+
+// ajax scan db
+function MxScanDB( scanUrl ){
+
+	var diffID = '';
+
+	$.ajax( {
+		url: scanUrl,
+		type: 'GET',
+		beforeSend: function(){},
+		complete: function(){},
+		success: function( data ){
+			var lastIdDB = data,
+				lastIdDBCookie = $.cookie( 'lastId' );
+
+			if( !$.cookie( 'lastId' ) ){
+				$.cookie( 'lastId', lastIdDB );
+				console.log( 'id no cookie' );
+			} else{
+				if( lastIdDB !== lastIdDBCookie ){
+					var diffID = lastIdDB - lastIdDBCookie; // difference (LIMIT)
+
+					diffID = 'LIMIT ' + diffID;
+
+					// Select from DB LIMIT = diffID
+					MxOnloadAllPoints( '../inc/select.php', diffID );
+
+					// Set cookie
+					$.cookie( 'lastId', lastIdDB );
+
+					// Set var
+					lastIdDBCookie = $.cookie( 'lastId' );
+
+					// Count points
+					setTimeout( function(){
+						setCountPoints();
+					},500 );					
+
+					console.log( diffID );
+				} else{
+					console.log( 'No set points' );
+				}				
+			}
+			
 		}
 	} );
 }
@@ -75,6 +146,10 @@ function MxOnloadPage( newUrl ){
 			// Get point user
 			setTimeout( function(){
 				getPointThisUser();
+
+				// Show all points if is cookie
+				$( '.mx-yay_point_load' ).css( 'display', 'block' );
+
 			},400 );			
 
 			console.log( cookiOpen );
@@ -105,7 +180,7 @@ function MxOnloadPage( newUrl ){
 		}
 
 		// Load points
-		MxOnloadPage( '../inc/select.php' );
+		MxOnloadAllPoints( '../inc/select.php', '' );
 
 		// Count points
 		setTimeout( function(){
@@ -121,6 +196,7 @@ function MxOnloadPage( newUrl ){
 
     		getInfoPoint( '.mx-yay_point' );
 
+	    	// Popup
 	    	setPopupWindow(
 				'Вы сделали выбор',
 				'Спасибо!',
@@ -135,8 +211,21 @@ function MxOnloadPage( newUrl ){
 
 	    	// Load points
 	    	setTimeout( function(){
-				MxOnloadPage( '../inc/select.php' );
+
+	    		// Scan db and select			
+				MxScanDB( '../inc/scan_db.php' );
+			
 	    	},1000 );
+
+	    	setTimeout( function(){
+
+				// Get point user			
+				getPointThisUser();
+
+				// Show all points if is cookie
+				$( '.mx-yay_point_load' ).css( 'display', 'block' );
+
+	    	},1500 );				
 
 			// Inactive points
 			inactiveMainPoints();
@@ -171,7 +260,7 @@ function MxOnloadPage( newUrl ){
 
     // set cookie
     function setCookie(){
-    	$.cookie( 'cookie_ip', ipUser );
+    	$.cookie( 'cookie_ip', ipUser );   	
     }
 
     // Popup window
@@ -201,27 +290,7 @@ function MxOnloadPage( newUrl ){
 
 		$( '.mx-yay_count_yin .mx-yay_count_block span' ).html( '<span> - </span>' + countPoint_Yin );
 		$( '.mx-yay_count_yang .mx-yay_count_block span' ).html( '<span> - </span>' + countPoint_Yang );
-	}
-
-	// Insert data
-	function insertData( pointLeft, pointTop, pointID ){		
-
-		pointInsertData = 	'ip_user='+ ipUser +
-							'&id_point=' + pointID +
-							'&coord_x=' + pointLeft +
-							'&coord_y=' + pointTop;
-		$.ajax({
-			type: 'POST',
-			url: '../inc/insert.php',
-			data: pointInsertData,	
-			success: function(data) {
-				console.log( 'success!)' );                    
-			}			
-		});
-
-		// Set coocie
-		setCookie();
-	}
+	}	
 
 	// Inactive points
 	function inactiveMainPoints(){
@@ -229,6 +298,7 @@ function MxOnloadPage( newUrl ){
 		$( '.mx-yay_point_main' ).css( { 'opacity': '0.5', 'cursor': 'default' } );
 	}
     
+    // Point this user
     function getPointThisUser(){
     	var getCookieIp = $.cookie( 'cookie_ip' );
     	$( '.mx-yay_point_load' ).each( function(){

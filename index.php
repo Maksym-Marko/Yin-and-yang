@@ -87,7 +87,7 @@
 	?>
 
 	<script>
-		var ipUser = '<?php echo $ip;?>';		
+		var ipUser = '<?php echo $ip; ?>';		
 	</script>
 	<!-- Get ip -->
 

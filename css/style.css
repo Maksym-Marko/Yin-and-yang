@@ -73,6 +73,7 @@ body{
 	-o-border-radius: 50%;
 	-webkit-border-radius: 50%;
 	cursor: pointer;
+	z-index: 5;
 }
 		/**/
 		.mxYayPoint_Yin{
@@ -272,7 +273,7 @@ body{
 	width: 30px	!important;
 	height: 30px !important;
 	border: 2px solid #ddd;
-	z-index: 888;
+	z-index: 21;
 }
 
 .mx-yay_point_load{
