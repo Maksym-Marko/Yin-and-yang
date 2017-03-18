@@ -2,7 +2,8 @@ $( document ).ready( function(){
 
 	//$.cookie( 'cookie_ip', '' );
 
-	var disabledDraggable = false;
+	var cookiOpen = $.cookie( 'cookie_ip' ), // Cookie valid Open
+		disabledDraggable = false; // Disabled draggable		
 
 	init();
 
@@ -27,12 +28,14 @@ $( document ).ready( function(){
 
 setInterval( function(){
 	
+	if( cookiOpen ){
+		// AJAX functions
+			// code ...
 
-	// AJAX functions
-		// code ...
+		// Scan DB
+		MxScanDB( '../inc/scan_db.php' );
 
-	// Scan DB
-	MxScanDB( '../inc/scan_db.php' )	
+	}
 		
 },4000 );
 
@@ -125,18 +128,15 @@ function MxScanDB( scanUrl ){
 			
 		}
 	} );
+	
 }
-
-
-
 
 /*--------------------------------------------------------* 
 *----------------------- FUNCTIONS -----------------------*
-* --------------------------------------------------------*/
+* --------------------------------------------------------*/	
 
 	// initialized
-	function init(){
-		var cookiOpen = $.cookie( 'cookie_ip' );
+	function init(){		
 
 		if( cookiOpen ){
 
@@ -172,11 +172,11 @@ function MxScanDB( scanUrl ){
 
 			$( '.mx-yay_point_main' ).addClass( 'mx-yay_point_main_transition' );
 
-			// setPopupWindow(
-			// 	'Голосование открыто',
-			// 	'Вы можете выбрать один из двух вариантов',
-			// 	'Перетащите кружок в любое место на поле. Синий - добро, красный - зло.'
-			// )
+			setPopupWindow(
+				'Голосование открыто',
+				'Вы можете выбрать один из двух вариантов',
+				'Уже проголосовало <strong class="mx-count_All_Points"></strong> людей. Чтобы узнать подробности, перетащите кружок в любое место на поле. Синий - добро, красный - зло.'
+			)
 		}
 
 		// Load points
@@ -236,6 +236,9 @@ function MxScanDB( scanUrl ){
 			// Disabled
 			disabledDraggable = true;
 
+			// Set cookie
+			cookiOpen = $.cookie( 'cookie_ip' );
+
     	}    	
 		
     }
@@ -285,11 +288,19 @@ function MxScanDB( scanUrl ){
 
     // Count points functions
 	function setCountPoints(){
+
 		var countPoint_Yin = $( '.mx-yay_yin_field .mxYayPoint_Yin' ).length;
 		var countPoint_Yang = $( '.mx-yay_yin_field .mxYayPoint_Yang' ).length;
 
-		$( '.mx-yay_count_yin .mx-yay_count_block span' ).html( '<span> - </span>' + countPoint_Yin );
-		$( '.mx-yay_count_yang .mx-yay_count_block span' ).html( '<span> - </span>' + countPoint_Yang );
+		if( cookiOpen ){
+			$( '.mx-yay_count_yin .mx-yay_count_block span' ).html( '<span> - </span>' + countPoint_Yin );
+			$( '.mx-yay_count_yang .mx-yay_count_block span' ).html( '<span> - </span>' + countPoint_Yang );
+		} else{
+			countAllPoints = $( '.mx-yay_yin_field .mx-yay_point_load' ).length;
+			$( '.mx-count_All_Points' ).text( countAllPoints );
+		}		
+
+		
 	}	
 
 	// Inactive points

@@ -118,6 +118,7 @@ body{
     -moz-user-select: none;
     -webkit-touch-callout: none;
     -webkit-user-drag: none;
+    cursor: default;
 }
 .mx-yay_count_block{
 	display: table;

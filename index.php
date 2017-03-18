@@ -7,6 +7,9 @@
 	<meta name="author" content="Marko Maksym"/>
 	<meta name="keywords" content=""/>
 	<meta name="description" content=""/>
+	
+	<!-- timer -->
+	<link rel="stylesheet" href="js/countup/jquery.countup.css">
 
 	<link rel="stylesheet" href="css/style.css">
 </head>
@@ -31,32 +34,17 @@
 			<div class="mx-yay_count_yin">
 				<div class="mx-yay_count_block">
 					<div></div>
-					<span><span> - </span>0</span>
+					<span><span> - </span>?</span>
 				</div>				
 			</div>
 			<div class="mx-yay_count_yang">
 				<div class="mx-yay_count_block">
 					<div></div>
-					<span><span> - </span>0</span>
+					<span><span> - </span>?</span>
 				</div>
 			</div>
 			<div class="mx-yay_timer">
-				<span id="mx-timer" data-millisec-start="1489521128">
-					<?php
-						$timeStart = 1489521128;
-						$timeLive = time();
-						$timeDifference = $timeLive - $timeStart;
-						echo $timeDifference . '<br>';
-
-						$timeDifferenceKey = gmdate( "d", $timeDifference ) - 1;
-
-						if( $timeDifferenceKey == 0 ){
-							echo gmdate( "H:i:s", $timeDifference );
-						} else{
-							echo gmdate( "d H:i:s", $timeDifference );
-						}								
-					?>
-				</span>
+				<span id="mx-timer"></span>
 			</div>
 		</div>
 	</div>
@@ -87,7 +75,7 @@
 	?>
 
 	<script>
-		var ipUser = '<?php echo $ip; ?>';		
+		var ipUser = '33.2443.34';//'<?php echo $ip; ?>';		
 	</script>
 	<!-- Get ip -->
 
@@ -95,6 +83,16 @@
 	<script type="text/javascript" src="js/jquery-ui.js"></script>
 	<script type="text/javascript" src="js/jquery.cookie.js"></script>
 	<script type="text/javascript" src="js/common.js?v=<?php echo time();?>"></script>
+	
+	<!-- Timer -->
+	<script src="js/countup/jquery.countup.js"></script>
+	<script>
+	$( document ).ready( function(){
+		$('#mx-timer').countup( {
+			start: new Date( 'Sat Mar 18 2017 16:22:46 GMT+0200' )
+		} );
+	} );
+	</script>
 
 	<script type="text/javascript" src="js/pluso.js"></script>
 

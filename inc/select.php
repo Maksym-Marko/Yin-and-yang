@@ -17,7 +17,7 @@
 		position: absolute;
 		width: 10px;
 		height: 10px;
-		/*display: none;*/
+		display: none;
 	}
 		
 </style>
