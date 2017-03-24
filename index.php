@@ -11,7 +11,7 @@
 	<!-- timer -->
 	<link rel="stylesheet" href="js/countup/jquery.countup.css">
 
-	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/style.css?v=<?php echo time(); ?>">
 </head>
 <body>
 
@@ -24,7 +24,55 @@
 				<div id="mxYayPoint_Yang" class="mx-yay_point mx-yay_point_main"></div>
 			</div>
 			<div class="mx-yay_info">
-				1
+				<span id="mx-info" title="Информация">i</span>
+				<div class="mx-info_wrap">
+					<div class="mx-info_content">
+						
+						<h1>
+							Если я был бы Нео или Синий против Красного
+						</h1>
+
+						<p>
+							<strong>А если бы на месте Нео оказался ты, какой бы цвет взял?</strong>
+						</p>
+
+						<p>
+							<strong style="color: #3724E2;">Синюю</strong> – и все останется как было. <br>
+							<strong style="color: #E22424;">Красную</strong> – тебе откроется суровая реальность!							
+						</p>
+						<p>
+							Как думаешь, сколько человек выберут сложный путь?
+						</p>
+						<p>
+							Свой выбор сделали уже <strong class="mx-count_All_Points" style="color: #000;"></strong> людей.
+						</p>
+
+						<h2>
+							Описание:
+						</h2>
+						<p>
+							- Проголосовать можно <strong>один раз</strong>. 
+						</p>
+						<p>
+							- Голосование носит исключительно <strong>шуточный характер</strong>.
+						</p>
+
+						<h2>
+							Правила:
+						</h2>						
+
+						<p>
+							- Выбери любую точку cверху на экране (синюю или красную) и перетащи ее на поле. Только после этого ты сможешь увидеть, <strong>сколько людей думают также как и ты</strong>.
+						</p>
+						<img src="img/screen.jpg" style="width: 90%; margin: 25px auto; display: table;">
+						<p style="color: #157908; font-size: 19px; font-weight: bold;">
+							Поделись с друзьями :)
+						</p>
+
+
+						<div class="pluso" style="clear: both; float: none; display: table; margin: 10px auto;" data-background="transparent" data-options="big,square,line,horizontal,counter,theme=04" data-services="vkontakte,odnoklassniki,facebook,twitter,google" data-url="http://yin-and-yang/" data-title="Синие против красного" data-description="Текст описаие"></div>
+					</div>					
+				</div>
 			</div>
 		</div>
 
@@ -75,7 +123,7 @@
 	?>
 
 	<script>
-		var ipUser = '33.2443.345577';//'<?php echo $ip; ?>';		
+		var ipUser = '<?php echo $ip; ?>';		
 	</script>
 	<!-- Get ip -->
 

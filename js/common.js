@@ -157,11 +157,12 @@ function MxScanDB( scanUrl ){
 
 			},400 );			
 
-			console.log( cookiOpen );
+			console.log( cookiOpen );			
+
 			setPopupWindow(
-				'Вы уже зделали свой выбор',
+				'Ты уже зделал свой выбор',
 				'Спасибо!',
-				'Этого окна не будет в программе'
+				'На данный момент проголосовало <strong class="mx-count_All_Points" style="color: #000;"></strong> людей. <br> <img src="img/neo.png" style="width: 300px; margin: 25px auto; display: table; position: absolute; top: 19px;">'
 			);
 
 			disabledDraggable = true;
@@ -178,9 +179,9 @@ function MxScanDB( scanUrl ){
 			$( '.mx-yay_point_main' ).addClass( 'mx-yay_point_main_transition' );
 
 			setPopupWindow(
-				'Голосование открыто',
-				'Вы можете выбрать один из двух вариантов',
-				'Уже проголосовало <strong class="mx-count_All_Points"></strong> людей. Чтобы узнать подробности, перетащите кружок в любое место на поле. Синий - добро, красный - зло.'
+				'Помнишь, как в Матрице…?',
+				'Выбери таблетку, Нео!',
+				'<strong style="color: #3724E2;">Синюю</strong> – и все останется как было. <br> <strong style="color: #E22424;">Красную</strong> – тебе откроется суровая реальность! <br><br> Как думаешь, сколько человек выберут сложный путь? <br> Свой выбор сделали уже <strong class="mx-count_All_Points" style="color: #000;"></strong> людей. Чтобы узнать детальную информацию, сделай и ты выбор! <br><br> <strong>Перетащи кружок в любое место на экране</strong>. <img src="img/screen.jpg" style="width: 90%; margin: 12px auto; display: table;">'
 			)
 		}
 
@@ -203,9 +204,9 @@ function MxScanDB( scanUrl ){
 
 	    	// Popup
 	    	setPopupWindow(
-				'Вы сделали выбор',
+				'Ты сделал выбор',
 				'Спасибо!',
-				'Передайте, пожалуйста, эту ссылку своему другу <span style="color: #3f21da;float: none;padding: 10px 0px;font-weight: bold;">http://example.com</span> Пусть и он проголосует :) <br><br> Также Вы можете поделиться страницой в социальной сете.'
+				'Передай, пожалуйста, эту ссылку другу <span style="color: #3f21da;float: none;padding: 10px 0px;font-weight: bold;">http://example.com</span> Пусть и он проголосует :) <br><br> Также ты можешь поделиться страницой в социальной сети.'
 			);
 
 	    	// append pluso		
@@ -321,11 +322,18 @@ function MxScanDB( scanUrl ){
 		var countPoint_Yang = $( '.mx-yay_yin_field .mxYayPoint_Yang' ).length;
 
 		if( cookiOpen ){
+
 			$( '.mx-yay_count_yin .mx-yay_count_block span' ).html( '<span> - </span>' + countPoint_Yin );
 			$( '.mx-yay_count_yang .mx-yay_count_block span' ).html( '<span> - </span>' + countPoint_Yang );
-		} else{
+
 			countAllPoints = $( '.mx-yay_yin_field .mx-yay_point_load' ).length;
 			$( '.mx-count_All_Points' ).text( countAllPoints );
+
+		} else{
+
+			countAllPoints = $( '.mx-yay_yin_field .mx-yay_point_load' ).length;
+			$( '.mx-count_All_Points' ).text( countAllPoints );
+
 		}		
 
 		

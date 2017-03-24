@@ -24,7 +24,7 @@ body{
 	padding: 0;
 	margin: 0;
 	background-color: #F7F4E8;
-	/*background-image: url(../img/bg_body.jpg);	*/
+	background-image: url(../img/bg_body.jpg);
 }
 .mx-yay_wrap{
 	position: relative;
@@ -57,6 +57,7 @@ body{
     box-sizing: border-box;
 }
 .mx-yay_info{
+	position: relative;
 	float: left;
 	width: 6%;
 	height: 100%;
@@ -232,7 +233,6 @@ body{
 	font-family: 'Raleway-Light';
   font-size: 22px;
   color: #333;
-  padding-top: 10px;
 }
 .mx-popup_wrap p{
   font-family: 'Raleway-Medium';
@@ -281,4 +281,56 @@ body{
 
 .mx-yay_point_load{
 	cursor: default !important;
+}
+
+/* info */
+#mx-info{
+	font-family: "Raleway-Bold";
+    display: table;
+    color: #fff;
+    background-color: #2f8f1a;
+    padding: 11px 15px;
+    line-height: 13px;
+    border-radius: 50%;
+    font-size: 18px;
+    margin-top: -11px;
+    cursor: pointer;
+}
+.mx-info_wrap{
+	position: absolute;
+    width: 400px;
+    height: 588px;
+    padding: 10px;
+    right: 0px;
+    top: -1200px;
+    background: #f0f3ef;
+    z-index: 88;
+    overflow: auto;
+    -webkit-box-shadow: -14px 11px 20px -13px rgba(0,0,0,0.57);
+    -moz-box-shadow: -14px 11px 20px -13px rgba(0,0,0,0.57);
+    box-shadow: -14px 11px 20px -13px rgba(0,0,0,0.57);
+    -webkit-transition: 0.3s all ease;
+    transition: 0.3s all ease;
+}
+.mx-info_content{
+	display: table;
+	padding: 0px 10px;
+}
+#mx-info:hover{
+    background: #194f0d;	
+}
+.mx-yay_info:hover .mx-info_wrap{
+	top: 0px;
+}
+.mx-info_content h1{
+	font-family: "Raleway-Bold";
+	text-align: center;
+    color: #272720;
+}
+.mx-info_content h2{
+	font-family: "Raleway-Medium";
+	color: #333;
+}
+.mx-info_content p{
+	font-family: 'Raleway-Medium';
 }
