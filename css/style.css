@@ -24,6 +24,7 @@ body{
 	padding: 0;
 	margin: 0;
 	background-color: #F7F4E8;
+	/*background-image: url(../img/bg_body.jpg);	*/
 }
 .mx-yay_wrap{
 	position: relative;
@@ -102,6 +103,7 @@ body{
 	/*background-color: #53F55E;
 	opacity: 0.2;*/
 	z-index: 2;
+	/*background-image: url(../img/bg_center.jpg);*/
 }
 
 /* System */
@@ -175,7 +177,7 @@ body{
 	text-align: center;
 	-moz-box-sizing: border-box;
     box-sizing: border-box;
-	padding-top: 24px;
+	padding-top: 16px;
 }
 .mx-yay_timer span{
 	font-size: 40px;

@@ -117,7 +117,12 @@ function MxScanDB( scanUrl ){
 
 					// Count points
 					setTimeout( function(){
+
 						setCountPoints();
+
+						// Show all points
+						$( '.mx-yay_point_load' ).css( 'display', 'block' );
+
 					},500 );					
 
 					console.log( diffID );
@@ -269,6 +274,8 @@ function MxScanDB( scanUrl ){
     // Popup window
     function setPopupWindow( setH2, setH3, setP ){
 
+    	var displayPopup = $( '.mx-popup_wrap' ).css( 'display' );
+
     	$( '#MxClose' ).css( 'cursor', 'pointer' );
 
     	$( '.mx-popup_wrap h2' ).html( setH2 );
@@ -278,12 +285,33 @@ function MxScanDB( scanUrl ){
     	setTimeout( function(){
 			$( '.mx-popup_wrap' ).css( 'display', 'block' );
 			$( 'body' ).css( 'overflow', 'hidden' );
-    	},700 );		    	
+
+			displayPopup = $( '.mx-popup_wrap' ).css( 'display' );
+
+    	},700 );    		
 
 		$( '#MxClose' ).on( 'click', function(){
 			$( '.mx-popup_wrap' ).css( 'display', 'none' );
 			$( 'body' ).css( 'overflow', 'auto' );
-		});
+
+			displayPopup = $( '.mx-popup_wrap' ).css( 'display' );
+
+		});		
+
+		$( document ).click( function( e ){
+
+			if( displayPopup == 'block' ){
+				var popupBlock = $( '.mx-org_info_wrap' );
+
+				if( !popupBlock.is( e.target ) && popupBlock.has( e.target).length === 0 ){
+					$( '.mx-popup_wrap' ).css( 'display', 'none' );
+					$( 'body' ).css( 'overflow', 'auto' );
+					displayPopup = 'none';
+				}
+			}
+
+		} );
+		
     }
 
     // Count points functions

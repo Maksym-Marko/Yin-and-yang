@@ -75,7 +75,7 @@
 	?>
 
 	<script>
-		var ipUser = '33.2443.34';//'<?php echo $ip; ?>';		
+		var ipUser = '33.2443.345577';//'<?php echo $ip; ?>';		
 	</script>
 	<!-- Get ip -->
 
